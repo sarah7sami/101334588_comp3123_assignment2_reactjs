@@ -44,9 +44,7 @@ const Navbar: FC = (): ReactElement => {
               display: { xs: "none", md: "flex" },
             }}
           >
-            <Typography color="black" variant="h5">
-                Magic Shop Cafe
-            </Typography> <EmojiFoodBeverageIcon />
+            Magic Shop Cafe <EmojiFoodBeverageIcon />
 
 
           </Typography>
@@ -61,7 +59,39 @@ const Navbar: FC = (): ReactElement => {
             >
               <MenuIcon />
             </IconButton>
-            
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: "block", md: "none" },
+              }}
+            >
+              {routes.map((page) => (
+                <Link
+                  key={page.key}
+                  component={NavLink}
+                  to={page.path}
+                  color="black"
+                  underline="none"
+                  variant="button"
+                >
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{page.title}</Typography>
+                  </MenuItem>
+                </Link>
+              ))}
+            </Menu>
           </Box>
           <Typography
             variant="h6"
@@ -81,7 +111,16 @@ const Navbar: FC = (): ReactElement => {
                 marginLeft: "1rem",
               }}
             >
-              
+              {/* <Link
+                  component={NavLink}
+                  to="/login"
+                  color="black"
+                  underline="none"
+                  variant="button"
+                  sx={{ fontSize: "large", marginLeft: "2rem" }}
+                >
+                  Login
+                </Link> */}
             </Box>
           </Box>
         </Toolbar>

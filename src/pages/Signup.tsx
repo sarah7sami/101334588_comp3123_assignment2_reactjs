@@ -30,14 +30,14 @@ const Signup: React.FC = () => {
             .then((response) => {
                 console.log(response);
                 if (response.status === 201) {
-                    Swal.fire(
-                        'Success!',
-                        'User created.',
-                        'success'
-                    )
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'User created.',
+                        footer: '<a href="/login">Login</a>'
+                    })
                 }
             }
-
         )
         .catch(err => {
             console.error(err);
@@ -124,6 +124,8 @@ const Signup: React.FC = () => {
 
                         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                             <button type="submit" className="btn btn-primary btn-lg" value="Submit">Register</button>
+                            <p className="small fw-bold mt-2 pt-1 mb-0 ms-2">Already have an account? <a href="/login"
+                                className="link-danger">Login</a></p>
                         </div>
 
                         </form>
