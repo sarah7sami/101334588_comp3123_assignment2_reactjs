@@ -12,6 +12,7 @@ const EmployeeShow: FC<any> = (): ReactElement => {
         }}>
             <Typography variant="h3">Employee Show</Typography>
         </Box>
+        
     );
 };
 

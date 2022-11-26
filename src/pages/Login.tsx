@@ -28,7 +28,6 @@ const Login: React.FC = () => {
                 if (response.status === 200) {
                     // set session storage token
                     sessionStorage.setItem("token", response.data.user);
-                    alert(sessionStorage.getItem("token"));
                     // redirect to employee list page
                     window.location.href = "/employees";
                 }
