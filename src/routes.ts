@@ -50,7 +50,7 @@ export const routes: Array<Route> = [
     {
         key: 'employee-edit-route',
         title: 'Edit Employee',
-        path: '/employees/:id/edit',
+        path: '/employees/edit/:id',
         enabled: true,
         component: EmployeeEdit
     },

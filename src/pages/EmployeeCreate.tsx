@@ -10,6 +10,7 @@ import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 
 const token = sessionStorage.getItem("token");
 
+// @ts-expect-error => the alert return is not a ReactElement but is also an expected return type
 const EmployeeCreate: React.FC = () => {
     interface EmployeeFormData {
         first_name: string;

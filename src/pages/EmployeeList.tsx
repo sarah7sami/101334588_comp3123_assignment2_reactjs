@@ -134,7 +134,8 @@ const EmployeeList: FC<any> = (): ReactElement => {
                               </button>
                             <button
                                 style={{ all: "unset" }}
-                                onClick={() => window.location.href=`/employees/{{employee._id}}/edit`}
+                                // on click, go to edit page and save the id of the employee into a variable
+                                onClick={() => (window.location.href = `/employees/edit/${employee._id}`)}
                               >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
