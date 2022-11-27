@@ -5,17 +5,17 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import "../../src/App.css";
 
-interface RegisterFormData {
+interface LoginFormData {
     username: string;
     password: string;
 }
 
 const Login: React.FC = () => {
-    const { register, handleSubmit, formState: {errors}, watch } = useForm<RegisterFormData>()
+    const { register, handleSubmit, formState: {errors}, watch } = useForm<LoginFormData>()
     const MySwal = withReactContent(Swal)
 
-    const [userData, setUserData] = useState<RegisterFormData>();
-    const onSubmit = (data:RegisterFormData) => {
+    const [userData, setUserData] = useState<LoginFormData>();
+    const onSubmit = (data:LoginFormData) => {
         // using axios to send data to the backend
         setUserData(data);
         console.log(data);
