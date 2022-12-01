@@ -60,5 +60,12 @@ export const routes: Array<Route> = [
         path: '/employees/:id',
         enabled: true,
         component: EmployeeShow
+    },
+    {
+        key: 'landing-route',
+        title: 'Login',
+        path: '/',
+        enabled: true,
+        component: Login
     }
 ];
