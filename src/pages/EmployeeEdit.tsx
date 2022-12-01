@@ -13,9 +13,8 @@ const token = sessionStorage.getItem("token");
 
 // @ts-expect-error => the alert return is not a ReactElement but is also an expected return type
 const EmployeeEdit: React.FC = () => {
-    // set id to the id of the employee
-    const [id, setId] = useState(null);
-
+    // set id to the id of the employee by splitting url employees/edit/6355cd0ea1cc5a2e704c119f and getting the last element
+    const id = window.location.href.split("/").pop();
     interface EmployeeFormData {
         first_name: string;
         last_name: string;
@@ -34,7 +33,7 @@ const EmployeeEdit: React.FC = () => {
     const [swalFired, setSwalFired] = React.useState(false);
 
     // use axios to get the employee data
-    const { data, loading} = useFetch<Employee>("http://23.133.249.134:8080/api/emp/employees/{id}");
+    const { data, loading} = useFetch<Employee>(`http://23.133.249.134:8080/api/emp/employees/${id}`);
 
     const { register, handleSubmit, formState: {errors}, watch } = useForm<EmployeeFormData>()
     const mySwal = withReactContent(Swal)
@@ -45,7 +44,7 @@ const EmployeeEdit: React.FC = () => {
         setUserData(data);
         console.log(data);
 
-        axios.put("http://23.133.249.134:8080/api/emp/employees/{id}", data)
+        axios.put(`http://23.133.249.134:8080/api/emp/employees/${id}`, data)
             .then((response) => {
                 console.log(response);
                 if (response.status === 201) {
