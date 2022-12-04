@@ -8,6 +8,7 @@ import EmployeeList from "./pages/EmployeeList";
 
 // other
 import {FC} from "react";
+import NotFound from "./pages/NotFound";
 
 // interface
 interface Route {
@@ -67,5 +68,13 @@ export const routes: Array<Route> = [
         path: '/',
         enabled: true,
         component: Login
+    },
+    // show a 404 page if no route matches
+    {
+        key: '404-route',
+        title: '404',
+        path: '*',
+        enabled: true,
+        component: NotFound
     }
 ];

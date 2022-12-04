@@ -1,8 +1,8 @@
-import React, {ReactElement, FC} from "react";
+import React, {ReactElement, FC, useEffect} from "react";
 import {Box, Typography} from "@mui/material";
 import axios from "axios";
 import { useRef, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, UseFormSetValue } from "react-hook-form";
 import Swal from "sweetalert2";
 import withReactContent, { ReactElementOr } from "sweetalert2-react-content";
 import "../../src/App.css";
@@ -23,35 +23,45 @@ const EmployeeEdit: React.FC = () => {
         salary: number;
     }
 
-    interface Employee {
-        first_name: string;
-        last_name: string;
-        email: string;
-        gender: string;
-        salary: number;
-    }
     const [swalFired, setSwalFired] = React.useState(false);
+    const { register, handleSubmit, setValue, formState: {errors}, watch, reset } = useForm<EmployeeFormData>()
 
     // use axios to get the employee data
-    const { data, loading} = useFetch<Employee>(`http://23.133.249.134:8080/api/emp/employees/${id}`);
+    // const { data, loading} = useFetch<Employee>(`http://23.133.249.134:8080/api/emp/employees/${id}`);
+    const [ data, setData ] = useState<EmployeeFormData>({first_name: "", last_name: "", email: "", gender: "", salary: 0});
+    useEffect(() => {
+      axios.get(`http://23.133.249.134:8080/api/emp/employees/${id}`)
+          .then((resp) => {
+              setValue("first_name", resp.data.first_name);
+              setValue("last_name", resp.data.last_name);
+              setValue("email", resp.data.email);
+              setValue("salary", resp.data.salary);
+              setValue("gender", resp.data.gender);
+              setData(resp.data);
+              console.log(resp.data);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, []);
 
-    const { register, handleSubmit, formState: {errors}, watch } = useForm<EmployeeFormData>()
     const mySwal = withReactContent(Swal)
 
     const [userData, setUserData] = useState<EmployeeFormData>();
+
     const onSubmit = (data:EmployeeFormData) => {
-        // using axios to send data to the backend
+
         setUserData(data);
         console.log(data);
 
         axios.put(`http://23.133.249.134:8080/api/emp/employees/${id}`, data)
             .then((response) => {
                 console.log(response);
-                if (response.status === 201) {
+                if (response.status === 200) {
                   Swal.fire({
                     icon: "success",
                     title: "Success!",
-                    text: "Employee edited.",
+                    text: "Changes Saved.",
                     confirmButtonColor: "#3085d6",
                     confirmButtonText: "View Employees",
                     }).then((result) => {
@@ -105,7 +115,7 @@ const EmployeeEdit: React.FC = () => {
         
                           <div className="form-outline">
                           <label className="form-label" htmlFor="firstName">First Name</label>
-                            <input type="text" id="firstName" className="form-control form-control-lg" defaultValue={data.first_name} {...register("first_name", { required: true})}/>
+                            <input type="text" id="first_name" className="form-control form-control-lg" defaultValue={data.first_name} {...register("first_name", {required: true})} />
                             {errors.first_name && errors.first_name.type === "required" && <p className="text-danger small">This field is required</p>}
                           </div>
         
@@ -146,28 +156,27 @@ const EmployeeEdit: React.FC = () => {
                       <div className="col-md-6 mb-4">
         
                           <h6 className="mb-2 pb-1">Gender: </h6>
-        
+
                           <div className="form-check form-check-inline">
                             <input className="form-check-input" type="radio" id="femaleGender"
-                              value="female"  defaultValue={data.gender} {...register("gender", { required: true})}/>
+                              value="female" defaultChecked={data.gender === 'female'} {...register("gender", { required: true})}/>
                             <label className="form-check-label" htmlFor="femaleGender">Female</label>
                           </div>
         
                           <div className="form-check form-check-inline">
                             <input className="form-check-input" type="radio" id="maleGender"
-                              value="male" defaultValue={data.gender} {...register("gender", { required: true})}/>
+                              value="male" defaultChecked={data.gender === 'male'} {...register("gender", { required: true})}/>
                             <label className="form-check-label" htmlFor="maleGender">Male</label>
                           </div>
         
                           <div className="form-check form-check-inline">
                             <input className="form-check-input" type="radio" id="otherGender"
-                              value="other" defaultValue={data.gender} {...register("gender", { required: true})}/>
+                              value="other" defaultChecked={data.gender === 'other'} {...register("gender", { required: true})}/>
                             <label className="form-check-label" htmlFor="otherGender">Other</label>
                           </div>
+                          {errors.gender?.type === 'required' && <p className="text-danger small">This field is required</p>}
         
                         </div>
-        
-                      
         
                       <div className="mt-4 pt-2">
                       <button

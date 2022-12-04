@@ -153,6 +153,7 @@ const EmployeeCreate: React.FC = () => {
                               value="other" {...register("gender", { required: true})}/>
                             <label className="form-check-label" htmlFor="otherGender">Other</label>
                           </div>
+                          {errors.gender?.type === 'required' && <p className="text-danger small">This field is required</p>}
         
                         </div>
         
