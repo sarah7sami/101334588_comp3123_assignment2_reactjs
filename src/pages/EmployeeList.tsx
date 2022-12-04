@@ -107,8 +107,16 @@ const EmployeeList: FC<any> = (): ReactElement => {
                         data.map((employee: Employee, index) => (
                           <tr key={employee._id}>
                             <th scope="row">{index + 1}</th>
-                            <td>{employee.first_name}</td>
-                            <td>{employee.last_name}</td>
+                            <td>
+                              <button style={{ all: "unset", color: "blue", textDecoration: "underline" }}  onClick={() => 
+                                  (window.location.href = `/employees/${employee._id}`)
+                                }>{employee.first_name}</button>
+                            </td>
+                            <td>
+                              <button style={{ all: "unset", color: "blue", textDecoration: "underline" }}  onClick={() => 
+                                  (window.location.href = `/employees/${employee._id}`)
+                                }>{employee.last_name}</button>
+                            </td>
                             <td>{employee.email}</td>
                             <td>{employee.gender}</td>
                             <td>{employee.salary}</td>
