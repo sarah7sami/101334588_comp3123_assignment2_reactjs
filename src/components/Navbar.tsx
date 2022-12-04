@@ -1,4 +1,5 @@
 import React, { FC, ReactElement } from "react";
+import "react-router-dom";
 
 import {
   Box,
@@ -9,6 +10,7 @@ import {
   MenuItem,
   Toolbar,
   Typography,
+  Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { routes } from "../routes";
@@ -36,7 +38,37 @@ const Navbar: FC = (): ReactElement => {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
+          
+          {/* have a link - linked to home page (employee index) */}
+          {window.location.pathname !== "/login" && window.location.pathname !== "/signup" && window.location.pathname !== "/" && (
+            <Link
+              component={NavLink}
+              to="/employees"
+              underline="none"
+              sx={{
+                flexGrow: 1,
+                display: "flex",
+                alignItems: "center",
+                color: "black",
+                textDecoration: "none",
+              }}
+            >
+              <Typography
+              variant="h6"
+              noWrap
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+              }}
+            >
+              Magic Shop Cafe <EmojiFoodBeverageIcon />
+
+
+            </Typography>
+            </Link>
+          )}
+          {window.location.pathname === "/login" && (
+            <Typography
             variant="h6"
             noWrap
             sx={{
@@ -48,81 +80,41 @@ const Navbar: FC = (): ReactElement => {
 
 
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              {routes.map((page) => (
-                <Link
-                  key={page.key}
-                  component={NavLink}
-                  to={page.path}
-                  color="black"
-                  underline="none"
-                  variant="button"
-                >
-                  <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page.title}</Typography>
-                  </MenuItem>
-                </Link>
-              ))}
-            </Menu>
-          </Box>
-          <Typography
+          )}
+
+          {window.location.pathname === "/signup" && (
+            <Typography
             variant="h6"
             noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+            }}
           >
-            Magic Shop Cafe
+            Magic Shop Cafe <EmojiFoodBeverageIcon />
+
+
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "flex-start",
-                alignItems: "center",
-                marginLeft: "1rem",
-              }}
-            >
-              {/* <Link
-                  component={NavLink}
-                  to="/login"
-                  color="black"
-                  underline="none"
-                  variant="button"
-                  sx={{ fontSize: "large", marginLeft: "2rem" }}
-                >
-                  Login
-                </Link> */}
-            </Box>
-          </Box>
+          )}
+
+          {window.location.pathname === "/" && (
+            <Typography
+            variant="h6"
+            noWrap
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+            }}
+          >
+            Magic Shop Cafe <EmojiFoodBeverageIcon />
+
+
+          </Typography>
+          )}  
+
+          {window.location.pathname !== "/login" && window.location.pathname !== "/signup" && window.location.pathname !== "/" && (
+            <Button onClick={() => sessionStorage.clear()} component={NavLink} to="/login" sx={{ color: "black" }}>Logout</Button>
+          )}
         </Toolbar>
       </Container>
     </Box>

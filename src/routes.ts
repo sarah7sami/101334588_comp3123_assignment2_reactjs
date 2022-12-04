@@ -69,6 +69,13 @@ export const routes: Array<Route> = [
         enabled: true,
         component: Login
     },
+    {
+        key: 'home-route',
+        title: 'Home',
+        path: '/employees',
+        enabled: true,
+        component: EmployeeList
+    },
     // show a 404 page if no route matches
     {
         key: '404-route',
